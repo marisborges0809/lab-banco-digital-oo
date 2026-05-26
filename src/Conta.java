@@ -1,6 +1,7 @@
 
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 public abstract class Conta implements IConta {
 
@@ -9,7 +10,7 @@ public abstract class Conta implements IConta {
 
 	private int agencia;
 	private int numero;
-	private double saldo;
+	private BigDecimal saldo = BigDecimal.ZERO;
 	private Cliente cliente;
 	private List<Movimentacao> historico = new ArrayList<>();
 
@@ -20,35 +21,35 @@ public abstract class Conta implements IConta {
 	}
 
 	@Override
-	public void sacar(double valor) {
+	public void sacar(BigDecimal valor) {
 		validarValorPositivo(valor);
-		if (valor > this.saldo) {
+		if (valor.compareTo(this.saldo) > 0) {
 			throw new SaldoInsuficienteException("Saldo insuficiente para saque");
 		}
-		this.saldo -= valor;
+		this.saldo = this.saldo.subtract(valor);
 		this.historico.add(new Movimentacao(TipoMovimentacao.SAQUE, valor, "Saque"));
 	}
 
 	@Override
-	public void depositar(double valor) {
+	public void depositar(BigDecimal valor) {
 		validarValorPositivo(valor);
-		this.saldo += valor;
+		this.saldo = this.saldo.add(valor);
 		this.historico.add(new Movimentacao(TipoMovimentacao.DEPOSITO, valor, "Deposito"));
 	}
 
 	@Override
-	public void transferir(double valor, IConta contaDestino) {
+	public void transferir(BigDecimal valor, IConta contaDestino) {
 		validarValorPositivo(valor);
-		if (valor > this.saldo) {
+		if (valor.compareTo(this.saldo) > 0) {
 			throw new SaldoInsuficienteException("Saldo insuficiente para transferencia");
 		}
-		this.saldo -= valor;
+		this.saldo = this.saldo.subtract(valor);
 		contaDestino.depositar(valor);
 		this.historico.add(new Movimentacao(TipoMovimentacao.TRANSFERENCIA, valor, "Transferencia para conta " + ((Conta) contaDestino).getNumero()));
 	}
 
-	private void validarValorPositivo(double valor) {
-		if (valor <= 0) {
+	private void validarValorPositivo(BigDecimal valor) {
+		if (valor == null || valor.compareTo(BigDecimal.ZERO) <= 0) {
 			throw new IllegalArgumentException("Valor deve ser maior que zero");
 		}
 	}
@@ -61,7 +62,7 @@ public abstract class Conta implements IConta {
 		return numero;
 	}
 
-	public double getSaldo() {
+	public BigDecimal getSaldo() {
 		return saldo;
 	}
 
@@ -77,7 +78,7 @@ public abstract class Conta implements IConta {
 		System.out.println(String.format("Titular: %s", this.cliente.getNome()));
 		System.out.println(String.format("Agencia: %d", this.agencia));
 		System.out.println(String.format("Numero: %d", this.numero));
-		System.out.println(String.format("Saldo: %.2f", this.saldo));
+		System.out.println(String.format("Saldo: %s", this.saldo.setScale(2)));
 	}
 
 	@Override

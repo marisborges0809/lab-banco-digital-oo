@@ -15,10 +15,10 @@ public class Main {
 
 		// deposito na conta corrente
 		Conta contaCorrente = banco.buscarConta(cc.getNumero());
-		contaCorrente.depositar(100);
+		contaCorrente.depositar(java.math.BigDecimal.valueOf(100));
 
 		// transferencia realizada via Banco
-		banco.transferirEntreContas(cc.getNumero(), poupanca.getNumero(), 100);
+		banco.transferirEntreContas(cc.getNumero(), poupanca.getNumero(), java.math.BigDecimal.valueOf(100));
 
 		// imprimir extratos
 		System.out.println();

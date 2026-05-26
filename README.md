@@ -1,44 +1,92 @@
 # Lab - Banco Digital (OO)
 
-Este projeto simula um cenário bancário para demonstrar a aplicação prática dos pilares da **Programação Orientada a Objetos (POO)** em Java. O projeto foi iniciado como uma estrutura base e concluído com a implementação completa das regras de negócio, histórico de transações e tratamento de exceções.
+Este projeto simula um cenário bancário para demonstrar a aplicação prática dos pilares da **Programação Orientada a Objetos (POO)** em Java. O projeto foi iniciado como uma estrutura base e evoluiu para implementar regras de negócio, histórico de transações e tratamento de exceções.
 
-## 🚀 Funcionalidades Concluídas
-- **Gerenciamento de Contas:** Suporte a Conta Corrente e Conta Poupança.
-- **Operações Bancárias:** Fluxos completos de Depósito, Saque e Transferência entre contas.
-- **Histórico de Transações:** Registro detalhado de movimentações com timestamp e tipo de operação.
-- **Tratamento de Erros:** Exceção customizada para controle de saldo insuficiente.
+## Funcionalidades Concluídas
+- Gerenciamento de Contas: Conta Corrente e Conta Poupança
+- Operações Bancárias: Depósito, Saque e Transferência
+- Histórico de Transações com timestamp e tipo
+- Exceção customizada para saldo insuficiente
 
----
+## Conceitos de POO Aplicados
+- Abstração (`Conta`, `Banco`, `Movimentacao`)
+- Encapsulamento (saldo e histórico privados)
+- Herança (`Conta` -> `ContaCorrente` / `ContaPoupanca`)
+- Polimorfismo (operações genéricas via `IConta`)
 
-## 🧠 Conceitos de POO Aplicados
+## Estrutura do Projeto
+O código-fonte está em `src/` com as classes principais:
 
-O desenvolvimento do sistema priorizou as boas práticas de orientação a objetos, estruturado da seguinte forma:
+- `Main.java` — demonstra fluxos (abertura, depósito, transferência, extratos)
+- `Conta.java`, `ContaCorrente.java`, `ContaPoupanca.java`
+- `Banco.java`
+- `Movimentacao.java`, `TipoMovimentacao.java`
+- `SaldoInsuficienteException.java`
 
-* **Abstração:** Modelagem das entidades do domínio bancário (`Conta`, `Banco`, `Movimentacao`) focando apenas nas propriedades fundamentais para o negócio.
-* **Encapsulamento:** Proteção dos dados sensíveis (como saldo e histórico) utilizando modificadores de acesso privados e expondo apenas os métodos necessários (`sacar`, `depositar`, `transferir`).
-* **Herança:** Reutilização e extensão de código com a classe base `Conta` sendo herdada pelas classes derivadas `ContaCorrente` e `ContaPoupanca`.
-* **Polimorfismo:** Tratamento genérico das contas na classe `Banco`, permitindo transações entre diferentes tipos de contas de forma transparente.
+## Pré-requisitos
 
----
+- Java JDK 11 ou superior
 
-## 📂 Estrutura do Projeto
+## Como Compilar
 
-O código-fonte está localizado no diretório `src/` e está organizado com as seguintes classes principais:
+Abra um terminal na raiz do projeto e execute:
 
-* `Main.java`: Classe executável contendo a demonstração dos fluxos.
-* `Conta.java`, `ContaCorrente.java`, `ContaPoupanca.java`: Modelos e regras das contas.
-* `Banco.java`: Gerencia a lista de contas e executa transferências.
-* `Movimentacao.java`, `TipoMovimentacao.java`: Entidades responsáveis pelo histórico de transações.
-* `SaldoInsuficienteException.java`: Exceção de domínio para operações inválidas.
-
----
-
-## 🛠️ Pré-requisitos
-
-* Java JDK 11 ou superior configurado no ambiente.
-
-### Como Compilar
-
-Abra o terminal na raiz do projeto e execute:
 ```bash
 javac src/*.java -d bin
+```
+
+## Como Executar
+
+```bash
+java -cp bin Main
+```
+
+## Exemplo de Saída
+
+```
+Extratos no banco: Banco OO
+
+=== Extrato Conta Corrente ===
+Titular: Venilton
+Agencia: 1
+Numero: 1
+Saldo: 0.00
+-- Historico --
+2026-05-26T03:13:26.990814 | DEPOSITO | 100.00 | Deposito
+2026-05-26T03:13:27.022206 | TRANSFERENCIA | 100.00 | Transferencia para conta 2
+
+=== Extrato Conta Poupanca ===
+Titular: Venilton
+Agencia: 1
+Numero: 2
+Saldo: 100.00
+-- Historico --
+2026-05-26T03:13:26.991122 | DEPOSITO | 100.00 | Deposito
+```
+
+## Uso de `BigDecimal`
+
+O projeto utiliza `BigDecimal` para operações monetárias. Exemplos de criação de valores:
+
+```java
+// partir de long/double fixo
+BigDecimal v1 = BigDecimal.valueOf(100);
+
+// partir de String (recomendado para precisão)
+BigDecimal v2 = new BigDecimal("1234.56");
+
+// ajustar escala ao imprimir
+System.out.println(v2.setScale(2));
+```
+
+Ao adicionar valores manualmente no código, prefira `BigDecimal.valueOf(...)` ou `new BigDecimal("...")`.
+
+## Observações e Melhorias Sugeridas
+
+- Precisão monetária tratada com `BigDecimal` (já aplicado no código).
+- Separar a lógica de apresentação (prints) da camada de domínio para testes automatizados.
+- Adicionar testes unitários (JUnit) e persistência (arquivo/JSON/BD) para produção.
+
+## Entrega (estágio)
+
+O estado atual é adequado para uma entrega de estágio: compila, executa e demonstra abertura de contas, depósitos, transferências e extratos. Inclua este README na submissão.

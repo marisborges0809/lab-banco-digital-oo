@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.math.BigDecimal;
 
 public class Banco {
 
@@ -41,7 +42,7 @@ public class Banco {
 		return false;
 	}
 
-	public void transferirEntreContas(int numeroOrigem, int numeroDestino, double valor) {
+	public void transferirEntreContas(int numeroOrigem, int numeroDestino, BigDecimal valor) {
 		Conta origem = buscarConta(numeroOrigem);
 		Conta destino = buscarConta(numeroDestino);
 		if (origem == null || destino == null) {
