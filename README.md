@@ -1,18 +1,44 @@
-# Criando um Banco Digital com Java e Orientação a Objetos
+# Lab - Banco Digital (OO)
 
-## 02/08/2021 - [Mentoria #1: Tire Suas Dúvidas Sobre Orientação a Objetos](https://www.youtube.com/watch?v=YS6ouOhkyNI)
+Este projeto simula um cenário bancário para demonstrar a aplicação prática dos pilares da **Programação Orientada a Objetos (POO)** em Java. O projeto foi iniciado como uma estrutura base e concluído com a implementação completa das regras de negócio, histórico de transações e tratamento de exceções.
 
-Desafio: Considerando nosso conhecimento no domínio bancário, iremos abstrair uma solução Orientada a Objetos em Java. Para isso, vamos interpretar o seguinte cenário:
-“Um banco oferece aos seus clientes dois tipos de contas (corrente e poupança), as quais possuem as funcionalidades de depósito, saque e transferência (entre contas da própria instituição).”
+## 🚀 Funcionalidades Concluídas
+- **Gerenciamento de Contas:** Suporte a Conta Corrente e Conta Poupança.
+- **Operações Bancárias:** Fluxos completos de Depósito, Saque e Transferência entre contas.
+- **Histórico de Transações:** Registro detalhado de movimentações com timestamp e tipo de operação.
+- **Tratamento de Erros:** Exceção customizada para controle de saldo insuficiente.
 
-### Abstração
-Habilidade de concentrar-se nos aspectos essenciais de um domínio, ignorando características menos importantes ou acidentais. Nesse contexto, objetos são abstrações de entidades existentes no domínio em questão.
+---
 
-### Encapsulamento
-Encapsular significa esconder a implementação dos objetos, criando assim interfaces de uso mais concisas e fáceis de usar/entender. O encapsulamento favorece principalmente dois aspectos de um sistema: a manutenção e a evolução.
+## 🧠 Conceitos de POO Aplicados
 
-### Herança
-Permite que você defina uma classe filha que reutiliza (herda), estende ou modifica o comportamento de uma classe pai. A classe cujos membros são herdados é chamada de classe base. A classe que herda os membros da classe base é chamada de classe derivada.
+O desenvolvimento do sistema priorizou as boas práticas de orientação a objetos, estruturado da seguinte forma:
 
-### Polimorfismo
-Capacidade de um objeto poder ser referenciado de várias formas, ou seja, é capacidade de tratar objetos criados a partir das classes específicas como objetos de uma classe genérica. Cuidado, polimorfismo não quer dizer que o objeto fica se transformando, muito pelo contrário, um objeto nasce de um tipo e morre daquele tipo, o que pode mudar é a maneira como nos referimos a ele.
+* **Abstração:** Modelagem das entidades do domínio bancário (`Conta`, `Banco`, `Movimentacao`) focando apenas nas propriedades fundamentais para o negócio.
+* **Encapsulamento:** Proteção dos dados sensíveis (como saldo e histórico) utilizando modificadores de acesso privados e expondo apenas os métodos necessários (`sacar`, `depositar`, `transferir`).
+* **Herança:** Reutilização e extensão de código com a classe base `Conta` sendo herdada pelas classes derivadas `ContaCorrente` e `ContaPoupanca`.
+* **Polimorfismo:** Tratamento genérico das contas na classe `Banco`, permitindo transações entre diferentes tipos de contas de forma transparente.
+
+---
+
+## 📂 Estrutura do Projeto
+
+O código-fonte está localizado no diretório `src/` e está organizado com as seguintes classes principais:
+
+* `Main.java`: Classe executável contendo a demonstração dos fluxos.
+* `Conta.java`, `ContaCorrente.java`, `ContaPoupanca.java`: Modelos e regras das contas.
+* `Banco.java`: Gerencia a lista de contas e executa transferências.
+* `Movimentacao.java`, `TipoMovimentacao.java`: Entidades responsáveis pelo histórico de transações.
+* `SaldoInsuficienteException.java`: Exceção de domínio para operações inválidas.
+
+---
+
+## 🛠️ Pré-requisitos
+
+* Java JDK 11 ou superior configurado no ambiente.
+
+### Como Compilar
+
+Abra o terminal na raiz do projeto e execute:
+```bash
+javac src/*.java -d bin
